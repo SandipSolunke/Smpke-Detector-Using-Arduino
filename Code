@@ -1,0 +1,43 @@
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(9, 8, 5, 4, 3, 2);
+
+void setup() {
+  lcd.begin(16, 2);
+  pinMode(A0, INPUT);
+  Serial.begin(9600);
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(10,OUTPUT);
+  lcd.print("Welcome...");
+  delay(500);
+  lcd.clear();
+  lcd.print("Smoke Detector");
+  delay(500);
+  lcd.clear();
+  lcd.print("by RNXG");
+  delay(500);
+}
+
+void loop() {
+  int sensor=0;
+  sensor = analogRead(A0);
+  Serial.println(sensor);
+  if (sensor > 500) {
+    digitalWrite(6, HIGH);
+    digitalWrite(7, HIGH);
+    digitalWrite(11, HIGH);
+    lcd.clear();
+    lcd.print("Danger!!");
+    lcd.setCursor(0,1);
+    lcd.print("Smoke Detected!");
+  } else {
+    digitalWrite(6, LOW);
+    digitalWrite(7, LOW);
+    digitalWrite(10, HIGH);
+    digitalWrite(11, LOW);
+    lcd.clear();
+    lcd.print("Its Safe!");
+  }
+  delay(100);
+}
+
